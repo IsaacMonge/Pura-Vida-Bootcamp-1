@@ -1,8 +1,11 @@
 import { useWallet } from "./hooks/useWallet";
 import { WalletSection } from "./components/WalletSection";
+import { BalanceSection } from "./components/BalanceSection";
+import { useAccount } from "./hooks/useAccount";
 
 export default function App() {
   const wallet = useWallet();
+  const account = useAccount(wallet.address);
 
   return (
     <main className="container">
@@ -19,6 +22,15 @@ export default function App() {
         onConnect={wallet.connect}
         onDisconnect={wallet.disconnect}
       />
+
+      {wallet.address && (
+        <BalanceSection
+          state={account.state}
+          funding={account.funding}
+          onFund={account.fund}
+          onRefresh={account.refresh}
+        />
+      )}
     </main>
   );
 }
