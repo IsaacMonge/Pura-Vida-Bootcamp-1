@@ -2,6 +2,7 @@ import { useWallet } from "./hooks/useWallet";
 import { WalletSection } from "./components/WalletSection";
 import { BalanceSection } from "./components/BalanceSection";
 import { useAccount } from "./hooks/useAccount";
+import { TipSection } from "./components/TipSection";
 
 export default function App() {
   const wallet = useWallet();
@@ -29,6 +30,15 @@ export default function App() {
           funding={account.funding}
           onFund={account.fund}
           onRefresh={account.refresh}
+        />
+      )}
+
+      {wallet.address && (
+        <TipSection
+          address={wallet.address}
+          disabled={wallet.wrongNetwork || account.state.status !== "ready"}
+          sign={wallet.sign}
+          onSent={account.refresh}
         />
       )}
     </main>
