@@ -3,10 +3,14 @@ import { WalletSection } from "./components/WalletSection";
 import { BalanceSection } from "./components/BalanceSection";
 import { useAccount } from "./hooks/useAccount";
 import { TipSection } from "./components/TipSection";
+import { HistorySection } from "./components/HistorySection";
+import { useState } from "react";
 
 export default function App() {
   const wallet = useWallet();
   const account = useAccount(wallet.address);
+  const [refreshKey, setRefreshKey] = useState(0);
+  const refreshAll = () => { account.refresh(); setRefreshKey((k) => k + 1); };
 
   return (
     <main className="container">
@@ -29,7 +33,7 @@ export default function App() {
           state={account.state}
           funding={account.funding}
           onFund={account.fund}
-          onRefresh={account.refresh}
+          onRefresh={refreshAll}
         />
       )}
 
@@ -38,9 +42,17 @@ export default function App() {
           address={wallet.address}
           disabled={wallet.wrongNetwork || account.state.status !== "ready"}
           sign={wallet.sign}
-          onSent={account.refresh}
+          onSent={refreshAll}
         />
       )}
+
+      {wallet.address && account.state.status === "ready" && (
+        <HistorySection address={wallet.address} refreshKey={refreshKey} />
+      )}
+
+      <footer className="muted small">
+        Hecho por Isaac Monge Barrantes · Pura Vida Bootcamp · construido con ayuda de Stellar Raven. Solo Testnet: el XLM no tiene valor real.
+      </footer>
     </main>
   );
 }

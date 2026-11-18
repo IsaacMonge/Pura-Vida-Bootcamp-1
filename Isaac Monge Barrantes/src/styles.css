@@ -63,3 +63,12 @@ a { color: var(--accent); }
 .chip.on { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
 .confirm { margin-top: 14px; padding: 14px; border-radius: 10px; border: 1px dashed var(--accent); }
 .confirm p { margin: 0 0 10px; }
+.small { font-size: .85rem; }
+.history { list-style: none; margin: 0; padding: 0; }
+.history li { display: grid; grid-template-columns: auto 1fr auto; gap: 4px 10px; align-items: center; padding: 10px 0; border-top: 1px solid var(--border); }
+.history li:first-child { border-top: 0; }
+.history li a { grid-column: 1 / -1; }
+.history b.in { color: var(--accent); }
+.tag { font-size: .75rem; padding: 2px 8px; border-radius: 999px; background: var(--bg); border: 1px solid var(--border); }
+.tag.in { background: var(--ok-bg); color: var(--ok-text); border-color: transparent; }
+footer { text-align: center; margin-top: 24px; }
